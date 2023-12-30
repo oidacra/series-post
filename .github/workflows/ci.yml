@@ -1,0 +1,36 @@
+name: CI
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  check-frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3 # Cache node_modules to speed up builds
+        with:
+          node-version: 18
+          cache: 'yarn'
+
+      - name: Install Dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Setup Nx SHA
+        uses: nrwl/nx-set-shas@v3 # Sets environment variables for commit SHAs, optimizing Nx's change detection for efficient CI processes
+
+      - name: Check Git Branch
+        run: git branch --track main origin/main # This line is needed for nx affected to work when CI is running on a PR
+
+      - name: Run Nx Format Check
+        run: npx nx format:check
+
+      - name: Run Nx Affected Commands
+        run: npx nx affected -t lint,test,build --parallel=3
