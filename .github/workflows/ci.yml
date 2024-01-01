@@ -1,27 +1,31 @@
 name: CI
-on:
+on: # when does the workflow run?
   push:
     branches:
       - main
   pull_request:
 
+# Needed for nx-set-shas within nx-cloud-main.yml, when run on the main branch
+permissions:
+  actions: read
+  contents: read
 jobs:
-  check-frontend:
+  check-frontend: # name of the job
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4 # Checkout the repository at the latest commit
         with:
-          fetch-depth: 0
+          fetch-depth: 0 # Fetch all history for all branches so that nx affected can compare against all commits
 
       - name: Setup Node.js
         uses: actions/setup-node@v3 # Cache node_modules to speed up builds
         with:
-          node-version: 18
-          cache: 'yarn'
+          node-version: 18 # Use the version 18 of Node.js
+          cache: 'yarn' # Cache node_modules to speed up builds
 
       - name: Install Dependencies
-        run: yarn install --frozen-lockfile
+        run: yarn install --frozen-lockfile # Install dependencies using yarn with a frozen lockfile
 
       - name: Setup Nx SHA
         uses: nrwl/nx-set-shas@v3 # Sets environment variables for commit SHAs, optimizing Nx's change detection for efficient CI processes
@@ -30,7 +34,7 @@ jobs:
         run: git branch --track main origin/main # This line is needed for nx affected to work when CI is running on a PR
 
       - name: Run Nx Format Check
-        run: npx nx format:check
+        run: npx nx format:check # Run the format check
 
       - name: Run Nx Affected Commands
-        run: npx nx affected -t lint,test,build --parallel=3
+        run: npx nx affected -t lint,test,build --parallel=3 # Run the lint, test, and build targets in parallel
