@@ -38,3 +38,11 @@ jobs:
 
       - name: Run Nx Affected Commands
         run: npx nx affected -t lint,test,build --parallel=3 # Run the lint, test, and build targets in parallel
+
+      - name: Deploy to Firebase
+#        if: github.ref == 'refs/heads/main' # Only deploy to Firebase when the main branch is updated
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: "${{ secrets.GITHUB_TOKEN }}"
+          firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT }}"
+          channelId: live
