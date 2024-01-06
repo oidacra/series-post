@@ -1,22 +1,14 @@
-<ng-container *ngIf="vm$ | async as vm">
   <h1>Series</h1>
-
-  <!--Show this while loading:-->
-  <ng-container *ngIf="vm.isLoading; else contentTpl">
+  @if (vm().isLoading){
     <p>Loading...</p>
-  </ng-container>
-
-  <!--Template when the data is loaded:-->
-  <ng-template #contentTpl>
-    <ul *ngIf="vm.series.length; else noItemsTpl">
-      <li *ngFor="let serie of vm.series">
-        {{ serie.name }}
-      </li>
+  }
+  @else{
+    <ul>
+        @for (item of vm().series; track item.id;) {
+            <li>{{item.name}}</li>
+        } @empty {
+            <li>No series found</li>
+        }
     </ul>
+  }
 
-    <!-- If dont have any series, show this:-->
-    <ng-template #noItemsTpl>
-      <p>No series found</p>
-    </ng-template>
-  </ng-template>
-</ng-container>
