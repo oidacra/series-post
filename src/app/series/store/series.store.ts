@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Signal } from '@angular/core';
 import { ComponentStore, tapResponse } from '@ngrx/component-store';
-import { Observable, switchMap, tap } from 'rxjs';
+import { switchMap, tap } from 'rxjs';
 import { SeriesService } from '../services/series.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import {
@@ -12,15 +12,10 @@ import { initialSeriesState } from '../shared/series.constants';
 
 @Injectable()
 export class SeriesStore extends ComponentStore<SeriesState> {
-  // Selectors
-  readonly series$ = this.select((state) => state.series);
-  readonly isLoading$ = this.select((state) => state.state === 'loading');
-
   // Updaters
   readonly addSeries = this.updater((state, series: Serie[]) => {
     return { ...state, series, state: 'loaded' };
   });
-
   // Effects
   readonly getAllSeries = this.effect<void>((trigger$) =>
     trigger$.pipe(
@@ -41,15 +36,18 @@ export class SeriesStore extends ComponentStore<SeriesState> {
       )
     )
   );
-
+  // Selectors
+  private readonly series: Signal<Serie[]> = this.selectSignal(
+    (state) => state.series
+  );
+  private readonly isLoading: Signal<boolean> = this.selectSignal(
+    (state) => state.state === 'loading'
+  );
   // This is the ViewModel exposed to the component
-  readonly vm$: Observable<ViewModelComponent> = this.select(
-    this.series$,
-    this.isLoading$,
-    (series, isLoading) => ({
-      series,
-      isLoading,
-    })
+  readonly vm: Signal<ViewModelComponent> = this.selectSignal(
+    this.series,
+    this.isLoading,
+    (series, isLoading) => ({ series, isLoading })
   );
 
   constructor(private readonly seriesService: SeriesService) {
