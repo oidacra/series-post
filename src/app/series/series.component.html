@@ -1,14 +1,12 @@
-  <h1>Series</h1>
-  @if (vm().isLoading){
-    <p>Loading...</p>
+<h1>Series</h1>
+@if (vm().isLoading){
+<p>Loading...</p>
+} @else{
+<ul>
+  @for (item of vm().series; track item.id;) {
+  <li>{{ item.name }}</li>
+  } @empty {
+  <li>No series found</li>
   }
-  @else{
-    <ul>
-        @for (item of vm().series; track item.id;) {
-            <li>{{item.name}}</li>
-        } @empty {
-            <li>No series found</li>
-        }
-    </ul>
-  }
-
+</ul>
+}
