@@ -1,16 +1,13 @@
-name: CI
+name: Deploy to Firebase Hosting on PR
 on: # when does the workflow run?
-  push:
-    branches:
-      - main
   pull_request:
-
-# Needed for nx-set-shas within nx-cloud-main.yml, when run on the main branch
 permissions:
-  actions: read
-  contents: read
+  actions: read # Needed for nx-set-shas
+  contents: read # Needed for nx-set-shas
+  checks: write # Needed for GITHUB_TOKEN
 jobs:
-  check-frontend: # name of the job
+  build_and_preview: # name of the job
+    if: '${{ github.event.pull_request.head.repo.full_name == github.repository }}'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
@@ -38,3 +35,9 @@ jobs:
 
       - name: Run Nx Affected Commands
         run: npx nx affected -t lint,test,build --parallel=3 # Run the lint, test, and build targets in parallel
+
+      - name: Deploy to Firebase Hosting Preview Channel
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: '${{ secrets.GITHUB_TOKEN }}'
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_SERIES_PROJECT_V1 }}'
