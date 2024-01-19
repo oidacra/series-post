@@ -16,3 +16,5 @@ To execute tasks with Nx use the following syntax:
 ```
 nx serve series-workspace
 ```
+
+## Running unit tests
