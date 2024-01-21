@@ -21,12 +21,6 @@ jobs:
       - name: Install Dependencies
         run: yarn install --frozen-lockfile # Install dependencies using yarn with a frozen lockfile
 
-      - name: Setup Nx SHA
-        uses: nrwl/nx-set-shas@v3 # Sets environment variables for commit SHAs, optimizing Nx's change detection for efficient CI processes
-
-      - name: Check Git Branch
-        run: git branch --track main origin/main # This line is needed for nx affected to work when CI is running on a PR
-
       - name: Run Build App
         run: npx nx build series-workspace #build the app
 
