@@ -1,16 +1,14 @@
 name: Deploy to Firebase Hosting
 on: # when does the workflow run?
   pull_request:
-  push:
-    branches:
-      - main
+    types: [opened, synchronize, reopened, ready_for_review]
+    branches: [main]
 permissions:
   actions: read # Needed for nx-set-shas
   contents: read # Needed for nx-set-shas
   checks: write # Needed for GITHUB_TOKEN
 jobs:
   build_and_preview: # name of the job
-    if: '${{ github.event.pull_request.head.repo.full_name == github.repository }}'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
@@ -43,6 +41,6 @@ jobs:
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
-          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_SERIES_PROJECT_V1 }}'
-          expires: 8h # Deploy to the preview channel for 8 hours
-          channelId: ${{ github.ref == 'refs/heads/main' && 'live' || 'preview' }} # Deploy to the live channel if the branch is main, otherwise deploy to the preview channel
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_SERIES_V1_DB }}'
+          projectId: series-v1-db
+          #channelId: preview by default if you don't specify it.
