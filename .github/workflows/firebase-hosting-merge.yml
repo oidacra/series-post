@@ -10,11 +10,33 @@ jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - run: yarn install && npx nx build series-workspace
-      - uses: FirebaseExtended/action-hosting-deploy@v0
+      - name: Checkout Repository
+        uses: actions/checkout@v4 # Checkout the repository at the latest commit
+        with:
+          fetch-depth: 0 # Fetch all history for all branches so that nx affected can compare against all commits
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3 # Cache node_modules to speed up builds
+        with:
+          node-version: 18 # Use the version 18 of Node.js
+          cache: 'yarn' # Cache node_modules to speed up builds
+
+      - name: Install Dependencies
+        run: yarn install --frozen-lockfile # Install dependencies using yarn with a frozen lockfile
+
+      - name: Setup Nx SHA
+        uses: nrwl/nx-set-shas@v3 # Sets environment variables for commit SHAs, optimizing Nx's change detection for efficient CI processes
+
+      - name: Check Git Branch
+        run: git branch --track main origin/main # This line is needed for nx affected to work when CI is running on a PR
+
+      - name: Run Build App
+        run: npx nx build series-workspace #build the app
+
+      - name: Deploy to Firebase Hosting Preview Channel
+        uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_SERIES_V1_DB }}'
-          channelId: live
+          channelId: live # Deploy to live channel
           projectId: series-v1-db
