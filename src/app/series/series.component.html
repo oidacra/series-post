@@ -1,12 +1,28 @@
 <h1>Series</h1>
-@if (vm().isLoading){
+@if (vm().isLoading) {
 <p>Loading...</p>
-} @else{
-<ul>
-  @for (item of vm().series; track item.id;) {
-  <li>{{ item.name }}</li>
+} @else {
+<div class="series-card__wrapper">
+  @for (item of vm().series; track item.id; ) {
+
+  <nz-card nzHoverable [nzCover]="coverTemplate">
+    <nz-card-meta [nzTitle]="item.name" />
+  </nz-card>
+
+  <ng-template #coverTemplate>
+    <img
+      loading="lazy"
+      width="210"
+      height="295"
+      [alt]="item.name"
+      [ngSrc]="item.image.medium"
+    />
+  </ng-template>
+
   } @empty {
-  <li>No series found</li>
+  <nz-empty></nz-empty>
   }
-</ul>
+
+  <nz-pagination [nzPageIndex]="1" [nzTotal]="50"></nz-pagination>
+</div>
 }
