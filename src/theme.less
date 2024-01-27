@@ -1,0 +1,26 @@
+// For more information: https://ng.ant.design/docs/customize-theme/en
+// -------- import official less file -----------
+//@import "../node_modules/ng-zorro-antd/ng-zorro-antd.less";
+@import "../node_modules/ng-zorro-antd/ng-zorro-antd.compact.less";
+
+@imdb-yellow: #f5c518; // Color amarillo de IMDB
+@imdb-black: #000000; // Negro
+@imdb-grey: #f4f4f4; // Gris claro para fondos
+
+// -------- override less variables -----------
+// View all variables: https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/components/style/themes/default.less
+
+// Sobrescribir variables de NG-ZORRO
+@primary-color: @imdb-yellow; // Color primario
+@layout-header-background: @imdb-black; // Color de fondo del header
+@layout-body-background: @imdb-grey; // Color de fondo del contenido
+@text-color: darken(@imdb-grey, 70%); // Color del texto
+@heading-color: @imdb-black; // Color de los encabezados
+@border-radius-base: 4px; // Radio de borde
+@link-color: @imdb-yellow; // Color de los enlaces
+
+// Otros colores de estado
+@success-color: #52c41a; // Verde para éxitos
+@warning-color: #faad14; // Amarillo para advertencias
+@error-color: #f5222d; // Rojo para errores
+@info-color: @primary-color; // Color para información, usa el color primario
