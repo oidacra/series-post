@@ -1,0 +1,2 @@
+nx format:write
+nx affected -t lint,test --parallel=2

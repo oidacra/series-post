@@ -7,6 +7,10 @@ permissions:
   actions: read # Needed for nx-set-shas
   contents: read # Needed for nx-set-shas
   checks: write # Needed for GITHUB_TOKEN
+
+env:
+  HUSKY: 0 # Disable Husky hooks
+
 jobs:
   build_and_preview: # name of the job
     runs-on: ubuntu-latest
