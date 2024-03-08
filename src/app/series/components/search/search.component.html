@@ -1,0 +1,36 @@
+<h1>Find a TV Serie</h1>
+
+<form (ngSubmit)="submitForm()" [formGroup]="form" nz-form nzLayout="inline">
+	<nz-form-item>
+		<nz-form-control nzErrorTip="Please add a serie name">
+			<nz-input-group [nzSuffix]="inputClearTpl">
+				<input
+					data-testId="query-input"
+					formControlName="query"
+					nz-input
+					nzSize="large"
+					placeholder="Name of your favorite Tv Show" />
+			</nz-input-group>
+		</nz-form-control>
+	</nz-form-item>
+
+	<nz-form-item>
+		<nz-form-control>
+			<button [nzLoading]="isLoading()" data-testId="submit-button" nz-button nzType="primary">
+				Search
+			</button>
+		</nz-form-control>
+	</nz-form-item>
+</form>
+
+<ng-template #inputClearTpl>
+	@if (queryValue) {
+	<span
+		data-testId="reset-icon"
+		nz-icon
+		class="ant-input-clear-icon"
+		nzTheme="fill"
+		nzType="close-circle"
+		(click)="resetForm()"></span>
+	}
+</ng-template>
