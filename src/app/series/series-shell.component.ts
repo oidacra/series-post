@@ -2,22 +2,23 @@ import {
   ChangeDetectionStrategy,
   Component,
   inject,
-  OnInit,
   Signal,
 } from '@angular/core';
 import { SeriesStore } from './store/series.store';
 import { AsyncPipe, NgForOf, NgIf, NgOptimizedImage } from '@angular/common';
 import { SeriesService } from './services/series.service';
-import { ViewModelComponent } from './shared/series.models';
 import { NzCardComponent, NzCardMetaComponent } from 'ng-zorro-antd/card';
 import { NzColDirective, NzRowDirective } from 'ng-zorro-antd/grid';
 import { NzPaginationComponent } from 'ng-zorro-antd/pagination';
 import { NzSpaceItemDirective } from 'ng-zorro-antd/space';
 import { NzImageDirective } from 'ng-zorro-antd/image';
 import { NzEmptyComponent } from 'ng-zorro-antd/empty';
+import { SearchComponent } from './components/search/search.component';
+import { ResultsComponent } from './components/results/results.component';
+import { ViewModelComponent } from './shared/series.models';
 
 @Component({
-  selector: 'app-series',
+  selector: 'app-series-shell',
   standalone: true,
   imports: [
     AsyncPipe,
@@ -32,17 +33,19 @@ import { NzEmptyComponent } from 'ng-zorro-antd/empty';
     NzSpaceItemDirective,
     NzImageDirective,
     NzEmptyComponent,
+    SearchComponent,
+    ResultsComponent,
   ],
-  templateUrl: './series.component.html',
-  styleUrls: ['./series.component.scss'],
+  templateUrl: './series-shell.component.html',
+  styleUrls: ['./series-shell.component.scss'],
   providers: [SeriesStore, SeriesService],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SeriesComponent implements OnInit {
+export class SeriesShellComponent {
   private readonly store = inject(SeriesStore);
-  readonly vm: Signal<ViewModelComponent> = this.store.vm; // Our ViewModel exposed to the template
+  readonly vm: Signal<ViewModelComponent> = this.store.vm;
 
-  ngOnInit(): void {
-    this.store.getAllSeries();
+  searchSeries(formValue: string) {
+    this.store.searchSeries(formValue);
   }
 }

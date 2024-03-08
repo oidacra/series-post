@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { SeriesComponent } from './series.component';
+import { SeriesShellComponent } from './series-shell.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('SeriesComponent', () => {
-  let component: SeriesComponent;
-  let fixture: ComponentFixture<SeriesComponent>;
+  let component: SeriesShellComponent;
+  let fixture: ComponentFixture<SeriesShellComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SeriesComponent, HttpClientTestingModule],
+      imports: [SeriesShellComponent, HttpClientTestingModule],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(SeriesComponent);
+    fixture = TestBed.createComponent(SeriesShellComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

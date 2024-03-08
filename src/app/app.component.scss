@@ -29,10 +29,8 @@ nz-breadcrumb {
   margin: 16px 0;
 }
 
-.inner-content {
-  background: #fff;
-  padding: 24px;
-  min-height: 380px;
+.content {
+  display: flex;
 }
 
 nz-footer {

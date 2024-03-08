@@ -4,6 +4,8 @@ export const appRoutes: Route[] = [
   {
     path: '',
     loadComponent: () =>
-      import('./series/series.component').then((m) => m.SeriesComponent),
+      import('./series/series-shell.component').then(
+        m => m.SeriesShellComponent
+      ),
   },
 ];
