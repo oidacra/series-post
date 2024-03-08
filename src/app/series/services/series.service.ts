@@ -11,29 +11,29 @@ const TVMAZE_ENDPOINT = 'https://api.tvmaze.com';
  */
 @Injectable()
 export class SeriesService {
-	private httpClient = inject(HttpClient);
+  private httpClient = inject(HttpClient);
 
-	/**
-	 * Fetches the series from the TVMaze API.
-	 *
-	 * @return {Observable<Serie[]>} An Observable that emits an array of Serie objects.
-	 */
-	getSeries(): Observable<Serie[]> {
-		return this.httpClient
-			.get<Serie[]>(`${TVMAZE_ENDPOINT}/shows`)
-			.pipe(tap((s) => console.log(s)));
-	}
+  /**
+   * Fetches the series from the TVMaze API.
+   *
+   * @return {Observable<Serie[]>} An Observable that emits an array of Serie objects.
+   */
+  getSeries(): Observable<Serie[]> {
+    return this.httpClient
+      .get<Serie[]>(`${TVMAZE_ENDPOINT}/shows`)
+      .pipe(tap(s => console.log(s)));
+  }
 
-	/**
-	 * Searches for TV series based on the provided query.
-	 *
-	 * @param {string} query - The query string used to search for TV series.
-	 * @return {Observable<Serie[]>} - An observable that emits an array of Serie objects matching the search query.
-	 */
-	searchSeries(query: string): Observable<Serie[]> {
-		const params = new HttpParams().set('q', query);
-		return this.httpClient
-			.get<Serie[]>(`${TVMAZE_ENDPOINT}/search/shows`, { params })
-			.pipe(tap((s) => console.log(s)));
-	}
+  /**
+   * Searches for TV series based on the provided query.
+   *
+   * @param {string} query - The query string used to search for TV series.
+   * @return {Observable<Serie[]>} - An observable that emits an array of Serie objects matching the search query.
+   */
+  searchSeries(query: string): Observable<Serie[]> {
+    const params = new HttpParams().set('q', query);
+    return this.httpClient
+      .get<Serie[]>(`${TVMAZE_ENDPOINT}/search/shows`, { params })
+      .pipe(tap(s => console.log(s)));
+  }
 }

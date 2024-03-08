@@ -1,31 +1,33 @@
 <div class="series-card__wrapper">
-	@for (item of series(); track item.show.id; ) {
+  @for (item of series(); track item.show.id; ) {
 
-	<nz-card nzHoverable [nzCover]="coverTemplate" data-testId="series-card">
-		<nz-card-meta [nzTitle]="cardTitle" />
-	</nz-card>
+  <nz-card nzHoverable [nzCover]="coverTemplate" data-testId="series-card">
+    <nz-card-meta [nzTitle]="cardTitle" />
+  </nz-card>
 
-	<ng-template #coverTemplate>
-		@if (item.show.image){
-		<img
-			data-testId="poster-image"
-			loading="lazy"
-			width="210"
-			height="295"
-			[alt]="item.show.name"
-			[ngSrc]="item.show.image.medium" />
-		} @else {
-		<span data-testId="poster-image-not-found" class="series-card__poster-not-found"
-			>No Poster Found</span
-		>
-		}
-	</ng-template>
+  <ng-template #coverTemplate>
+    @if (item.show.image){
+    <img
+      data-testId="poster-image"
+      loading="lazy"
+      width="210"
+      height="295"
+      [alt]="item.show.name"
+      [ngSrc]="item.show.image.medium" />
+    } @else {
+    <span
+      data-testId="poster-image-not-found"
+      class="series-card__poster-not-found"
+      >No Poster Found</span
+    >
+    }
+  </ng-template>
 
-	<ng-template #cardTitle>
-		<span data-testId="poster-title">{{ item.show.name }}</span>
-	</ng-template>
+  <ng-template #cardTitle>
+    <span data-testId="poster-title">{{ item.show.name }}</span>
+  </ng-template>
 
-	} @empty {
-	<nz-empty nzNotFoundContent="No TV Series"></nz-empty>
-	}
+  } @empty {
+  <nz-empty nzNotFoundContent="No TV Series"></nz-empty>
+  }
 </div>

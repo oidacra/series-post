@@ -1,89 +1,89 @@
 {
-	"name": "series-workspace",
-	"$schema": "node_modules/nx/schemas/project-schema.json",
-	"projectType": "application",
-	"prefix": "app",
-	"sourceRoot": "./src",
-	"tags": [],
-	"targets": {
-		"build": {
-			"executor": "@nx/angular:browser-esbuild",
-			"outputs": ["{options.outputPath}"],
-			"options": {
-				"outputPath": "dist/series-workspace",
-				"index": "./src/index.html",
-				"main": "./src/main.ts",
-				"polyfills": ["zone.js"],
-				"tsConfig": "./tsconfig.app.json",
-				"assets": [
-					"./src/favicon.ico",
-					"./src/assets",
-					{
-						"glob": "**/*",
-						"input": "./node_modules/@ant-design/icons-angular/src/inline-svg/",
-						"output": "/assets/"
-					}
-				],
-				"styles": ["src/theme.less", "./src/styles.scss"],
-				"scripts": []
-			},
-			"configurations": {
-				"production": {
-					"budgets": [
-						{
-							"type": "initial",
-							"maximumWarning": "500kb",
-							"maximumError": "2mb"
-						},
-						{
-							"type": "anyComponentStyle",
-							"maximumWarning": "2kb",
-							"maximumError": "4kb"
-						}
-					],
-					"outputHashing": "all"
-				},
-				"development": {
-					"buildOptimizer": false,
-					"optimization": false,
-					"vendorChunk": true,
-					"extractLicenses": false,
-					"sourceMap": true,
-					"namedChunks": true
-				}
-			},
-			"defaultConfiguration": "production"
-		},
-		"serve": {
-			"executor": "@angular-devkit/build-angular:dev-server",
-			"configurations": {
-				"production": {
-					"buildTarget": "series-workspace:build:production"
-				},
-				"development": {
-					"buildTarget": "series-workspace:build:development"
-				}
-			},
-			"defaultConfiguration": "development"
-		},
-		"extract-i18n": {
-			"executor": "@angular-devkit/build-angular:extract-i18n",
-			"options": {
-				"buildTarget": "series-workspace:build"
-			}
-		},
-		"lint": {
-			"executor": "@nx/eslint:lint",
-			"options": {
-				"lintFilePatterns": ["{projectRoot}/src"]
-			}
-		},
-		"test": {
-			"executor": "@nx/jest:jest",
-			"outputs": ["{workspaceRoot}/coverage/{projectName}"],
-			"options": {
-				"jestConfig": "jest.config.app.ts"
-			}
-		}
-	}
+  "name": "series-workspace",
+  "$schema": "node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "prefix": "app",
+  "sourceRoot": "./src",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/angular:browser-esbuild",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/series-workspace",
+        "index": "./src/index.html",
+        "main": "./src/main.ts",
+        "polyfills": ["zone.js"],
+        "tsConfig": "./tsconfig.app.json",
+        "assets": [
+          "./src/favicon.ico",
+          "./src/assets",
+          {
+            "glob": "**/*",
+            "input": "./node_modules/@ant-design/icons-angular/src/inline-svg/",
+            "output": "/assets/"
+          }
+        ],
+        "styles": ["src/theme.less", "./src/styles.scss"],
+        "scripts": []
+      },
+      "configurations": {
+        "production": {
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "500kb",
+              "maximumError": "2mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "2kb",
+              "maximumError": "4kb"
+            }
+          ],
+          "outputHashing": "all"
+        },
+        "development": {
+          "buildOptimizer": false,
+          "optimization": false,
+          "vendorChunk": true,
+          "extractLicenses": false,
+          "sourceMap": true,
+          "namedChunks": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve": {
+      "executor": "@angular-devkit/build-angular:dev-server",
+      "configurations": {
+        "production": {
+          "buildTarget": "series-workspace:build:production"
+        },
+        "development": {
+          "buildTarget": "series-workspace:build:development"
+        }
+      },
+      "defaultConfiguration": "development"
+    },
+    "extract-i18n": {
+      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "options": {
+        "buildTarget": "series-workspace:build"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "options": {
+        "lintFilePatterns": ["{projectRoot}/src"]
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectName}"],
+      "options": {
+        "jestConfig": "jest.config.app.ts"
+      }
+    }
+  }
 }

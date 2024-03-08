@@ -3,20 +3,20 @@ import { SeriesShellComponent } from './series-shell.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('SeriesComponent', () => {
-	let component: SeriesShellComponent;
-	let fixture: ComponentFixture<SeriesShellComponent>;
+  let component: SeriesShellComponent;
+  let fixture: ComponentFixture<SeriesShellComponent>;
 
-	beforeEach(async () => {
-		await TestBed.configureTestingModule({
-			imports: [SeriesShellComponent, HttpClientTestingModule]
-		}).compileComponents();
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [SeriesShellComponent, HttpClientTestingModule],
+    }).compileComponents();
 
-		fixture = TestBed.createComponent(SeriesShellComponent);
-		component = fixture.componentInstance;
-		fixture.detectChanges();
-	});
+    fixture = TestBed.createComponent(SeriesShellComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
 
-	it('should create', () => {
-		expect(component).toBeTruthy();
-	});
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 });
