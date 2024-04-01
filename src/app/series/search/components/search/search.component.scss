@@ -10,6 +10,11 @@
     text-align: center;
   }
 
+  button {
+    min-width: 80px;
+    margin: 0;
+  }
+
   ::ng-deep {
     .ant-form-item:first-child .ant-form-item-control-input {
       width: 350px;

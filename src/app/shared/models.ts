@@ -22,5 +22,5 @@ export interface SeriesState {
 
 export interface ViewModelComponent {
   series: Serie[];
-  isLoading: boolean;
+  state: ComponentState;
 }

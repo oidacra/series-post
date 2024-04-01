@@ -1,3 +1,6 @@
+@if (state() === 'loaded'){
+<span nz-typography nzType="secondary">{{ series().length }} items found</span>
+
 <div class="series-card__wrapper">
   @for (item of series(); track item.show.id; ) {
 
@@ -5,6 +8,7 @@
     <nz-card-meta [nzTitle]="cardTitle" />
   </nz-card>
 
+  <!-- Cover template for the card -->
   <ng-template #coverTemplate>
     @if (item.show.image){
     <img
@@ -23,11 +27,16 @@
     }
   </ng-template>
 
+  <!-- Title template for the card -->
   <ng-template #cardTitle>
     <span data-testId="poster-title">{{ item.show.name }}</span>
   </ng-template>
 
   } @empty {
-  <nz-empty nzNotFoundContent="No TV Series"></nz-empty>
+  <nz-empty nzNotFoundContent="No TV Series found"></nz-empty>
   }
 </div>
+}@else {
+<nz-empty
+  nzNotFoundContent="Use the search for find you favorite TV Show"></nz-empty>
+}

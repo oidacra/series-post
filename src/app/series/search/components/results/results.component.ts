@@ -1,9 +1,16 @@
-import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  input,
+  output,
+} from '@angular/core';
 import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { NzEmptyComponent } from 'ng-zorro-antd/empty';
-import { Serie } from '../../shared/series.models';
 import { NzCardComponent, NzCardMetaComponent } from 'ng-zorro-antd/card';
 import { NzPaginationComponent } from 'ng-zorro-antd/pagination';
+import { ComponentState, Serie } from '../../../../shared/models';
+import { NzTypographyComponent } from 'ng-zorro-antd/typography';
 
 @Component({
   selector: 'app-results',
@@ -15,6 +22,7 @@ import { NzPaginationComponent } from 'ng-zorro-antd/pagination';
     NzCardMetaComponent,
     NzPaginationComponent,
     NgOptimizedImage,
+    NzTypographyComponent,
   ],
   templateUrl: './results.component.html',
   styleUrl: './results.component.scss',
@@ -22,4 +30,7 @@ import { NzPaginationComponent } from 'ng-zorro-antd/pagination';
 })
 export class ResultsComponent {
   series = input<Serie[]>([]);
+  state = input<ComponentState>('idle');
+  isLoading = computed(() => this.state() === 'loading');
+  selected = output<Serie>();
 }

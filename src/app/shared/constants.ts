@@ -1,4 +1,4 @@
-import { SeriesState } from './series.models';
+import { SeriesState } from './models';
 
 export const initialSeriesState: SeriesState = {
   series: [],

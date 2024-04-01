@@ -1,10 +1,10 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  EventEmitter,
+  computed,
   inject,
   input,
-  Output,
+  output,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
@@ -23,6 +23,7 @@ import { NzColDirective, NzRowDirective } from 'ng-zorro-antd/grid';
 import { NzInputDirective, NzInputGroupComponent } from 'ng-zorro-antd/input';
 import { NzButtonComponent } from 'ng-zorro-antd/button';
 import { NzIconDirective } from 'ng-zorro-antd/icon';
+import { ComponentState } from '../../../../shared/models';
 
 @Component({
   selector: 'app-search',
@@ -49,10 +50,12 @@ import { NzIconDirective } from 'ng-zorro-antd/icon';
 })
 export class SearchComponent {
   // Signal Input
-  isLoading = input(false);
+  state = input<ComponentState>('idle');
+  // computed state
+  isLoading = computed(() => this.state() === 'loading');
 
-  @Output()
-  query = new EventEmitter<string>();
+  // Signal Output
+  query = output<string>();
 
   form = inject(FormBuilder).group({
     query: new FormControl('', Validators.required),

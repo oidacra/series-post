@@ -2,10 +2,21 @@ import { Route } from '@angular/router';
 
 export const appRoutes: Route[] = [
   {
-    path: '',
+    path: 'search',
     loadComponent: () =>
-      import('./series/series-shell.component').then(
-        m => m.SeriesShellComponent
+      import('./series/search/search-container.component').then(
+        (m) => m.SearchContainerComponent
       ),
+  },
+  // All empty paths should redirect to the search page
+  {
+    path: '',
+    pathMatch: 'full',
+    redirectTo: 'search',
+  },
+  // All other paths should redirect to the search page too
+  {
+    path: '**',
+    redirectTo: 'search',
   },
 ];
