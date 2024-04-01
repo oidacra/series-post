@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { SeriesComponent } from './series.component';
+import { SearchContainerComponent } from './search-container.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 
-describe('SeriesComponent', () => {
-  let component: SeriesComponent;
-  let fixture: ComponentFixture<SeriesComponent>;
+describe('SearchComponent', () => {
+  let component: SearchContainerComponent;
+  let fixture: ComponentFixture<SearchContainerComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SeriesComponent, HttpClientTestingModule],
+      imports: [SearchContainerComponent, HttpClientTestingModule],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(SeriesComponent);
+    fixture = TestBed.createComponent(SearchContainerComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

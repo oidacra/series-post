@@ -31,6 +31,11 @@
         "{workspaceRoot}/eslint.config.js"
       ],
       "cache": true
+    },
+    "@nx/angular:ng-packagr-lite": {
+      "cache": true,
+      "dependsOn": ["^build"],
+      "inputs": ["production", "^production"]
     }
   },
   "namedInputs": {
@@ -63,5 +68,13 @@
     }
   },
   "defaultProject": "series-workspace",
-  "nxCloudAccessToken": "YzFkMzY0ZjItY2IzZi00ZDc5LTk4MzctMGZmZjNjZmE3ZGNlfHJlYWQtd3JpdGU="
+  "nxCloudAccessToken": "YzFkMzY0ZjItY2IzZi00ZDc5LTk4MzctMGZmZjNjZmE3ZGNlfHJlYWQtd3JpdGU=",
+  "plugins": [
+    {
+      "plugin": "@nx/eslint/plugin",
+      "options": {
+        "targetName": "lint"
+      }
+    }
+  ]
 }
