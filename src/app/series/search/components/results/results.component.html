@@ -1,4 +1,4 @@
-@if (state() === 'loaded'){
+@if (state() === 'loaded') {
 <span nz-typography nzType="secondary">{{ series().length }} items found</span>
 
 <div class="series-card__wrapper">
@@ -10,7 +10,7 @@
 
   <!-- Cover template for the card -->
   <ng-template #coverTemplate>
-    @if (item.show.image){
+    @if (item.show.image) {
     <img
       data-testId="poster-image"
       loading="lazy"
@@ -21,14 +21,29 @@
     } @else {
     <span
       data-testId="poster-image-not-found"
-      class="series-card__poster-not-found"
-      >No Poster Found</span
-    >
+      class="series-card__poster-not-found">
+      No Poster Found
+    </span>
+
     }
   </ng-template>
 
   <!-- Title template for the card -->
   <ng-template #cardTitle>
+    <div class="series-card__header-hints">
+      @if (item.show.rating.average) {
+      <span>
+        <span nz-icon nzType="star" nzTheme="fill"></span>
+        {{ item.show.rating.average }}
+      </span>
+      }@else{
+      <span nz-icon nzType="star" nzTheme="outline"></span>
+      } @if (item.show.status) {
+      <nz-tag [nzColor]="colorStatusSeriesMap[item.show.status]">
+        {{ item.show.status }}
+      </nz-tag>
+      }
+    </div>
     <span data-testId="poster-title">{{ item.show.name }}</span>
   </ng-template>
 
@@ -36,7 +51,7 @@
   <nz-empty nzNotFoundContent="No TV Series found"></nz-empty>
   }
 </div>
-}@else {
+} @else {
 <nz-empty
   nzNotFoundContent="Use the search for find you favorite TV Show"></nz-empty>
 }

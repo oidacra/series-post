@@ -6,6 +6,8 @@ export const SeriesMock: Serie[] = [
     show: {
       id: 169,
       name: 'Breaking Bad',
+      rating: { average: 9.3 },
+      status: 'Ended',
       image: {
         medium:
           'https://static.tvmaze.com/uploads/images/medium_portrait/501/1253519.jpg',
