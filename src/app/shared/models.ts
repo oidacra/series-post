@@ -5,11 +5,14 @@ export interface Serie {
   score: number;
   show: SerieDetail;
 }
+
 interface SerieDetail {
   id: number;
   name: string;
   summary: string;
   image: { medium: string; original: string };
+  rating: { average: number };
+  status: SeriesStatus;
 }
 
 // Store state related
@@ -24,3 +27,5 @@ export interface ViewModelComponent {
   series: Serie[];
   state: ComponentState;
 }
+
+export type SeriesStatus = 'Running' | 'Ended' | 'ToBeAnnounced';
