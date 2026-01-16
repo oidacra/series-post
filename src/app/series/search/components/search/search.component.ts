@@ -6,7 +6,7 @@ import {
   input,
   output,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import {
   NzFormControlComponent,
   NzFormDirective,
@@ -29,11 +29,9 @@ import { ComponentState } from '../../../../shared/models';
   selector: 'app-search',
   standalone: true,
   imports: [
-    CommonModule,
     NzFormDirective,
     ReactiveFormsModule,
     NzFormItemComponent,
-    NzFormLabelComponent,
     NzFormControlComponent,
     NzColDirective,
     NzInputDirective,
@@ -45,7 +43,6 @@ import { ComponentState } from '../../../../shared/models';
   templateUrl: './search.component.html',
   styleUrl: './search.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  // eslint-disable-next-line @angular-eslint/no-host-metadata-property
   host: { class: 'inner-content' },
 })
 export class SearchComponent {
