@@ -5,7 +5,7 @@ import {
   input,
   output,
 } from '@angular/core';
-import { CommonModule, NgOptimizedImage } from '@angular/common';
+import { NgOptimizedImage } from '@angular/common';
 import { NzEmptyComponent } from 'ng-zorro-antd/empty';
 import { NzCardComponent, NzCardMetaComponent } from 'ng-zorro-antd/card';
 import { NzPaginationComponent } from 'ng-zorro-antd/pagination';
@@ -19,7 +19,6 @@ import { NzTagComponent } from 'ng-zorro-antd/tag';
   selector: 'app-results',
   standalone: true,
   imports: [
-    CommonModule,
     NzEmptyComponent,
     NzCardComponent,
     NzCardMetaComponent,

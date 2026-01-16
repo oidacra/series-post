@@ -1,4 +1,4 @@
-import { Injectable, Signal } from '@angular/core';
+import { Injectable, Signal, inject } from '@angular/core';
 import { ComponentStore, tapResponse } from '@ngrx/component-store';
 import {
   ComponentState,
@@ -61,7 +61,9 @@ export class SeriesStore extends ComponentStore<SeriesState> {
     (series, state) => ({ series, state })
   );
 
-  constructor(private readonly seriesService: SeriesService) {
+  private readonly seriesService = inject(SeriesService);
+
+  constructor() {
     super(initialSeriesState); // <--- Initialization when the store is created
   }
 

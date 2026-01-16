@@ -6,9 +6,7 @@ import { DebugElement } from '@angular/core';
 import { SeriesMock } from '../../../tests/series.mocks';
 
 describe('ResultsComponent', () => {
-  let component: ResultsComponent;
   let fixture: ComponentFixture<ResultsComponent>;
-  let de: DebugElement;
   let cardsElements: DebugElement[];
 
   beforeEach(async () => {
@@ -17,7 +15,7 @@ describe('ResultsComponent', () => {
     }).compileComponents();
 
     fixture = TestBed.createComponent(ResultsComponent);
-    component = fixture.componentInstance;
+
     fixture.detectChanges();
     fixture.componentRef.setInput('series', SeriesMock);
     fixture.componentRef.setInput('state', 'loaded');

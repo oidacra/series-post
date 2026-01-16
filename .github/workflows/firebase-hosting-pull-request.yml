@@ -23,7 +23,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3 # Cache node_modules to speed up builds
         with:
-          node-version: 18 # Use the version 18 of Node.js
+          node-version: 22 # Use the version 22 of Node.js
           cache: 'yarn' # Cache node_modules to speed up builds
 
       - name: Install Dependencies
