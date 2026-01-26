@@ -1,15 +1,12 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  inject,
-  Signal,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { ResultsComponent } from './components/results/results.component';
 import { SearchComponent } from './components/search/search.component';
 
 import { SeriesService } from '../services/series.service';
 import { SeriesStore } from '../series.store';
-import { ViewModelComponent } from '../../shared/models';
+
+import { injectDispatch } from '@ngrx/signals/events';
+import { SeriesEvents } from '../series.events';
 
 @Component({
   selector: 'app-search-container',
@@ -21,10 +18,10 @@ import { ViewModelComponent } from '../../shared/models';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SearchContainerComponent {
-  private readonly store = inject(SeriesStore);
-  readonly vm: Signal<ViewModelComponent> = this.store.vm;
+  readonly store = inject(SeriesStore);
+  private readonly dispatch = injectDispatch(SeriesEvents);
 
   searchSeries(formValue: string) {
-    this.store.searchSeries(formValue);
+    this.dispatch.queryChanged({ query: formValue });
   }
 }

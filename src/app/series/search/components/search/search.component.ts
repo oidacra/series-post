@@ -2,23 +2,18 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
-  inject,
   input,
   output,
+  signal,
 } from '@angular/core';
+
+import { debounce, form, FormField, schema } from '@angular/forms/signals';
 
 import {
   NzFormControlComponent,
   NzFormDirective,
   NzFormItemComponent,
-  NzFormLabelComponent,
 } from 'ng-zorro-antd/form';
-import {
-  FormBuilder,
-  FormControl,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
 import { NzColDirective, NzRowDirective } from 'ng-zorro-antd/grid';
 import { NzInputDirective, NzInputGroupComponent } from 'ng-zorro-antd/input';
 import { NzButtonComponent } from 'ng-zorro-antd/button';
@@ -30,7 +25,6 @@ import { ComponentState } from '../../../../shared/models';
   standalone: true,
   imports: [
     NzFormDirective,
-    ReactiveFormsModule,
     NzFormItemComponent,
     NzFormControlComponent,
     NzColDirective,
@@ -39,6 +33,7 @@ import { ComponentState } from '../../../../shared/models';
     NzRowDirective,
     NzInputGroupComponent,
     NzIconDirective,
+    FormField,
   ],
   templateUrl: './search.component.html',
   styleUrl: './search.component.scss',
@@ -48,28 +43,35 @@ import { ComponentState } from '../../../../shared/models';
 export class SearchComponent {
   // Signal Input
   state = input<ComponentState>('idle');
+
   // computed state
   isLoading = computed(() => this.state() === 'loading');
 
   // Signal Output
-  query = output<string>();
+  searchQuery = output<string>();
 
-  form = inject(FormBuilder).group({
-    query: new FormControl('', Validators.required),
+  queryModel = signal({
+    query: '',
   });
 
-  get queryValue(): string {
-    const { value } = this.form.controls['query'];
-    return value ? value : '';
-  }
+  form = form(
+    this.queryModel,
+    schema((path) => {
+      debounce(path.query, 250);
+    })
+  );
 
-  submitForm() {
-    if (this.form.valid) {
-      this.query.emit(this.queryValue);
+  submitForm(event: Event) {
+    event.preventDefault();
+    if (this.form().valid()) {
+      const query = this.form.query().value();
+      this.searchQuery.emit(query);
     }
   }
 
   resetForm() {
-    this.form.reset();
+    this.queryModel.set({
+      query: '',
+    });
   }
 }

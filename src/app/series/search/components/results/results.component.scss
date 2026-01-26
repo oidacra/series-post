@@ -3,14 +3,6 @@
   flex-direction: column;
   gap: 24px;
 
-  .series-card__poster-not-found {
-    width: 210px;
-    height: 295px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
   .series-card__wrapper {
     display: flex;
     flex-wrap: wrap;
@@ -19,27 +11,9 @@
     gap: 2rem;
   }
 
-  .series-card__header-hints {
-    display: flex;
-    justify-content: space-between;
-  }
-
   ::ng-deep {
-    [nz-card] {
-      width: 210px;
-      flex: 0 0 auto;
-    }
-
     [nz-typography] {
       text-align: right;
-    }
-
-    .ant-tag {
-      margin: 0;
-    }
-
-    .anticon-star {
-      color: #f5c518;
     }
   }
 }

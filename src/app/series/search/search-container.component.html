@@ -1,2 +1,4 @@
-<app-search (query)="searchSeries($event)" [state]="vm().state" />
-<app-results [series]="vm().series" [state]="vm().state" />
+@let currentState = store.state();
+
+<app-search (searchQuery)="searchSeries($event)" [state]="currentState" />
+<app-results [series]="store.series()" [state]="currentState" />

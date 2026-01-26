@@ -35,7 +35,7 @@ describe('ResultsComponent', () => {
     );
     expect(posterTitle).toBeTruthy();
     expect(posterTitle.nativeElement.innerHTML).toContain(
-      SeriesMock[0].show.name
+      SeriesMock[0].name
     );
   });
 
@@ -45,7 +45,7 @@ describe('ResultsComponent', () => {
     );
     expect(posterImage).toBeTruthy();
     expect(posterImage.properties['src']).toEqual(
-      SeriesMock[0].show.image.medium
+      SeriesMock[0].image.medium
     );
   });
 

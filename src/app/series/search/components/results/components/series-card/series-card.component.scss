@@ -1,0 +1,34 @@
+:host {
+  display: block;
+
+  .series-card__poster-not-found {
+    width: 210px;
+    height: 295px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f0f2f5;
+    color: #8c8c8c;
+  }
+
+  .series-card__header-hints {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+  }
+
+  ::ng-deep {
+    [nz-card] {
+      width: 210px;
+      flex: 0 0 auto;
+    }
+
+    .ant-tag {
+      margin: 0;
+    }
+
+    .anticon-star {
+      color: #f5c518;
+    }
+  }
+}
