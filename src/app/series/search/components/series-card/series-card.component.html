@@ -1,0 +1,41 @@
+<nz-card nzHoverable [nzCover]="coverTemplate" data-testId="series-card">
+  <nz-card-meta [nzTitle]="cardTitle" />
+</nz-card>
+
+<!-- Cover template for the card -->
+<ng-template #coverTemplate>
+  @if (item().image) {
+  <img
+    data-testId="poster-image"
+    loading="lazy"
+    width="210"
+    height="295"
+    [alt]="item().name"
+    [ngSrc]="item().image.medium" />
+  } @else {
+  <span
+    data-testId="poster-image-not-found"
+    class="series-card__poster-not-found">
+    No Poster Found
+  </span>
+  }
+</ng-template>
+
+<!-- Title template for the card -->
+<ng-template #cardTitle>
+  <div class="series-card__header-hints">
+    @if (item().rating.average) {
+    <span>
+      <span nz-icon nzType="star" nzTheme="fill"></span>
+      {{ item().rating.average }}
+    </span>
+    } @else {
+    <span nz-icon nzType="star" nzTheme="outline"></span>
+    } @if (item().status) {
+    <nz-tag [nzColor]="colorStatusSeriesMap[item().status]">
+      {{ item().status }}
+    </nz-tag>
+    }
+  </div>
+  <span data-testId="poster-title">{{ item().name }}</span>
+</ng-template>

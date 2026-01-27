@@ -1,52 +1,26 @@
-@if (state() === 'loaded') {
+@if (isLoading()) {
+<div class="series-card__wrapper">
+  @for (item of skeletonItems; track $index) {
+  <nz-card style="width: 210px" [nzCover]="coverSkeleton">
+    <nz-skeleton
+      [nzActive]="true"
+      [nzParagraph]="{ rows: 1 }"
+      [nzTitle]="false"></nz-skeleton>
+  </nz-card>
+  <ng-template #coverSkeleton>
+    <nz-skeleton-element
+      nzType="image"
+      [nzActive]="true"
+      style="width: 210px; height: 295px"></nz-skeleton-element>
+  </ng-template>
+  }
+</div>
+} @else if (state() === 'loaded') {
 <span nz-typography nzType="secondary">{{ series().length }} items found</span>
 
 <div class="series-card__wrapper">
-  @for (item of series(); track item.show.id; ) {
-
-  <nz-card nzHoverable [nzCover]="coverTemplate" data-testId="series-card">
-    <nz-card-meta [nzTitle]="cardTitle" />
-  </nz-card>
-
-  <!-- Cover template for the card -->
-  <ng-template #coverTemplate>
-    @if (item.show.image) {
-    <img
-      data-testId="poster-image"
-      loading="lazy"
-      width="210"
-      height="295"
-      [alt]="item.show.name"
-      [ngSrc]="item.show.image.medium" />
-    } @else {
-    <span
-      data-testId="poster-image-not-found"
-      class="series-card__poster-not-found">
-      No Poster Found
-    </span>
-
-    }
-  </ng-template>
-
-  <!-- Title template for the card -->
-  <ng-template #cardTitle>
-    <div class="series-card__header-hints">
-      @if (item.show.rating.average) {
-      <span>
-        <span nz-icon nzType="star" nzTheme="fill"></span>
-        {{ item.show.rating.average }}
-      </span>
-      }@else{
-      <span nz-icon nzType="star" nzTheme="outline"></span>
-      } @if (item.show.status) {
-      <nz-tag [nzColor]="colorStatusSeriesMap[item.show.status]">
-        {{ item.show.status }}
-      </nz-tag>
-      }
-    </div>
-    <span data-testId="poster-title">{{ item.show.name }}</span>
-  </ng-template>
-
+  @for (item of series(); track item.id; ) {
+  <app-series-card [item]="item" />
   } @empty {
   <nz-empty nzNotFoundContent="No TV Series found"></nz-empty>
   }

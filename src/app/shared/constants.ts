@@ -1,8 +1,7 @@
-import { SeriesState } from './models';
+import { SeriesStatus } from './models';
 
-export const initialSeriesState: SeriesState = {
-  series: [],
-  selectedId: null,
-  state: 'idle',
-  query: '',
+export const SERIES_STATUS_COLOR_MAP: Record<SeriesStatus, string> = {
+  Running: 'green',
+  Ended: 'red',
+  ToBeAnnounced: 'blue',
 };
