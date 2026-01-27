@@ -3,8 +3,8 @@ import { NgOptimizedImage } from '@angular/common';
 import { NzCardComponent, NzCardMetaComponent } from 'ng-zorro-antd/card';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzTagComponent } from 'ng-zorro-antd/tag';
-import { Serie } from '../../../../../../shared/models';
-import { SERIES_STATUS_COLOR_MAP } from '../../../../../../shared/constants';
+import { Serie } from '../../../../shared/models';
+import { SERIES_STATUS_COLOR_MAP } from '../../../../shared/constants';
 
 @Component({
   selector: 'app-series-card',

@@ -3,6 +3,7 @@ import { Route } from '@angular/router';
 export const appRoutes: Route[] = [
   {
     path: 'search',
+    title: 'Search TV Series',
     loadComponent: () =>
       import('./series/search/search-container.component').then(
         (m) => m.SearchContainerComponent

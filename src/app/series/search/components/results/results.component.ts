@@ -10,7 +10,7 @@ import { NzCardComponent } from 'ng-zorro-antd/card';
 import { NzSkeletonModule } from 'ng-zorro-antd/skeleton';
 import { ComponentState, Serie, SeriesStatus } from '../../../../shared/models';
 import { NzTypographyComponent } from 'ng-zorro-antd/typography';
-import { SeriesCardComponent } from './components/series-card/series-card.component';
+import { SeriesCardComponent } from '../series-card/series-card.component';
 
 @Component({
   selector: 'app-results',
