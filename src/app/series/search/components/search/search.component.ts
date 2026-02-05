@@ -20,6 +20,17 @@ import { NzButtonComponent } from 'ng-zorro-antd/button';
 import { NzIconDirective } from 'ng-zorro-antd/icon';
 import { ComponentState } from '../../../../shared/models';
 
+/**
+ * SearchComponent
+ * 
+ * @description
+ * Component that handles the search functionality.
+ * 
+ * @property {Input<ComponentState>} state - The loading state of the component.
+ * @property {Output<string>} searchQuery - The search query event emitter.
+ * @property {Signal<{ query: string }>} queryModel - The form model (the search query).
+ * @property {ReactiveForm<{ query: string }>} form - The reactive form definition with debounce logic.
+ */
 @Component({
   selector: 'app-search',
   standalone: true,
@@ -41,19 +52,31 @@ import { ComponentState } from '../../../../shared/models';
   host: { class: 'inner-content' },
 })
 export class SearchComponent {
-  // Signal Input
+  /**
+   * Input signal for the component state (e.g., 'idle', 'loading').
+   */
   state = input<ComponentState>('idle');
 
-  // computed state
+  /**
+   * Computed signal to determine if the component is in a loading state.
+   */
   isLoading = computed(() => this.state() === 'loading');
 
-  // Signal Output
+  /**
+   * Output event emitter for the search query.
+   */
   searchQuery = output<string>();
 
+  /**
+   * Signal holding the form model (the search query).
+   */
   queryModel = signal({
     query: '',
   });
 
+  /**
+   * Reactive form definition with debounce logic.
+   */
   form = form(
     this.queryModel,
     schema((path) => {
@@ -61,6 +84,11 @@ export class SearchComponent {
     })
   );
 
+  /**
+   * Handles form submission.
+   * Emits the search query if the form is valid.
+   * @param event - The form submission event.
+   */
   submitForm(event: Event) {
     event.preventDefault();
     if (this.form().valid()) {
@@ -69,6 +97,9 @@ export class SearchComponent {
     }
   }
 
+  /**
+   * Resets the form query to an empty string.
+   */
   resetForm() {
     this.queryModel.set({
       query: '',

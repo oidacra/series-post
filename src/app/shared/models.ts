@@ -8,6 +8,16 @@ export interface Serie {
   rating: { average: number };
   status: SeriesStatus;
   score?: number;
+  externals: { thetvdb: number };
+}
+
+export interface SerieDetail extends Serie {
+  officialSite: string;
+  genres: string[];
+  premiered: string;
+  ended: string;
+  language: string;
+  schedule: { time: string; days: string[] };
 }
 
 export interface SerieResponse {
