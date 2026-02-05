@@ -1,5 +1,5 @@
 @let searchState = store.searchState(); @let detailState = store.detailState();
-@let isDrawerVisible = store.selectedId() !== null; @let series =
+@let isDrawerVisible = !!store.selectedId(); @let series =
 store.series(); @let seriesDetail = store.seriesDetail();
 
 <app-search (searchQuery)="searchSeries($event)" [state]="searchState" />
