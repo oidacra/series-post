@@ -41,10 +41,10 @@ const initialSeriesState: SeriesState = {
 
 /**
  * SeriesStore
- * 
+ *
  * @description
  * Signal store for managing series data.
- * 
+ *
  * @property {SeriesState} state - The state of the series store.
  * @property {Signal<Serie[]>} series - The series data.
  * @property {Signal<SerieDetail | null>} seriesDetail - The series detail data.
@@ -87,36 +87,36 @@ export const SeriesStore = signalStore(
       events = inject(Events),
       seriesService = inject(SeriesService)
     ) => ({
-      loadSeriesByQuery$: events
-        .on(SeriesEvents.queryChanged).pipe(
-          debounceTime(DEBOUNCE_TIME_DEFAULT),
-          switchMap(({ payload }) =>
-            seriesService.searchSeries(payload.query).pipe(
-              mapResponse({
-                next: (series) => SeriesApiEvents.loadedSuccess(series),
-                error: (e: Error) => {
-                  SeriesApiEvents.loadedFailure(e.message || 'Error loading series');
-                },
-              })
-            )
+      loadSeriesByQuery$: events.on(SeriesEvents.queryChanged).pipe(
+        debounceTime(DEBOUNCE_TIME_DEFAULT),
+        switchMap(({ payload }) =>
+          seriesService.searchSeries(payload.query).pipe(
+            mapResponse({
+              next: (series) => SeriesApiEvents.loadedSuccess(series),
+              error: (e: Error) => {
+                SeriesApiEvents.loadedFailure(
+                  e.message || 'Error loading series'
+                );
+              },
+            })
           )
-        ),
-      loadSeriesDetail$: events
-        .on(SeriesEvents.seriesSelected).pipe(
-          filter(({ payload }) => !!payload.theTvDbId),
-          switchMap(({ payload }) =>
-            seriesService.getSeriesDetail(payload.theTvDbId).pipe(
-              mapResponse({
-                next: (detail) => SeriesApiEvents.detailLoadedSuccess(detail),
-                error: (e: Error) => {
-                  SeriesApiEvents.detailLoadedFailure(
-                    e.message || 'Error loading series details'
-                  );
-                },
-              })
-            )
+        )
+      ),
+      loadSeriesDetail$: events.on(SeriesEvents.seriesSelected).pipe(
+        filter(({ payload }) => !!payload.theTvDbId),
+        switchMap(({ payload }) =>
+          seriesService.getSeriesDetail(payload.theTvDbId).pipe(
+            mapResponse({
+              next: (detail) => SeriesApiEvents.detailLoadedSuccess(detail),
+              error: (e: Error) => {
+                SeriesApiEvents.detailLoadedFailure(
+                  e.message || 'Error loading series details'
+                );
+              },
+            })
           )
-        ),
+        )
+      ),
     })
   )
 );

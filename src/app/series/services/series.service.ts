@@ -49,9 +49,8 @@ export class SeriesService {
    */
   getSeriesDetail(theTvDbId: number): Observable<SerieDetail> {
     const params = new HttpParams().set('thetvdb', theTvDbId);
-    return this.httpClient.get<SerieDetail>(
-      `${TVMAZE_ENDPOINT}/lookup/shows`,
-      { params }
-    );
+    return this.httpClient.get<SerieDetail>(`${TVMAZE_ENDPOINT}/lookup/shows`, {
+      params,
+    });
   }
 }

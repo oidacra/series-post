@@ -1,15 +1,19 @@
-@let searchState = store.searchState();
-@let detailState = store.detailState();
-@let isDrawerVisible = store.selectedId() !== null;
-@let series = store.series();
-@let seriesDetail = store.seriesDetail();
+@let searchState = store.searchState(); @let detailState = store.detailState();
+@let isDrawerVisible = store.selectedId() !== null; @let series =
+store.series(); @let seriesDetail = store.seriesDetail();
 
 <app-search (searchQuery)="searchSeries($event)" [state]="searchState" />
-<app-results [series]="series" [state]="searchState" (selected)="onSeriesSelected($event)" />
+<app-results
+  [series]="series"
+  [state]="searchState"
+  (selected)="onSeriesSelected($event)" />
 
-<nz-drawer [nzVisible]="isDrawerVisible" [nzTitle]="seriesDetail?.name" (nzOnClose)="closeDrawer()"
-    [nzWidth]="600">
-    <ng-container *nzDrawerContent>
-        <app-series-detail [seriesDetail]="seriesDetail" [state]="detailState" />
-    </ng-container>
+<nz-drawer
+  [nzVisible]="isDrawerVisible"
+  [nzTitle]="seriesDetail?.name"
+  (nzOnClose)="closeDrawer()"
+  [nzWidth]="600">
+  <ng-container *nzDrawerContent>
+    <app-series-detail [seriesDetail]="seriesDetail" [state]="detailState" />
+  </ng-container>
 </nz-drawer>

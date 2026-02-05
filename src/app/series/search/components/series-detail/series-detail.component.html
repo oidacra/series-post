@@ -1,49 +1,68 @@
 @if (isLoading()) {
 <div class="series-detail-container">
-    <div class="header">
-        <nz-skeleton-element nzType="image" [nzActive]="true" style="width: 300px; height: 440px"></nz-skeleton-element>
-        <div class="info">
-            <nz-skeleton [nzActive]="true" [nzParagraph]="{ rows: 4 }"></nz-skeleton>
-        </div>
+  <div class="header">
+    <nz-skeleton-element
+      nzType="image"
+      [nzActive]="true"
+      style="width: 300px; height: 440px"></nz-skeleton-element>
+    <div class="info">
+      <nz-skeleton [nzActive]="true" [nzParagraph]="{ rows: 4 }"></nz-skeleton>
     </div>
-    <div class="summary">
-        <nz-skeleton [nzActive]="true" [nzParagraph]="{ rows: 4 }"></nz-skeleton>
-    </div>
+  </div>
+  <div class="summary">
+    <nz-skeleton [nzActive]="true" [nzParagraph]="{ rows: 4 }"></nz-skeleton>
+  </div>
 </div>
 } @else if (seriesDetail(); as show) {
 <div class="series-detail-container">
-    <div class="header">
-        <img [ngSrc]="show.image.original" [alt]="show.name" width="300" height="440" priority />
-        <div class="info">
-            <h3>{{ show.name }}</h3>
-            <p><strong>Premiered:</strong> {{ show.premiered }}</p>
-            <p><strong>Ended:</strong> {{ show.ended }}</p>
-            <p><strong>Language:</strong> {{ show.language }}</p>
-            <p><strong>Genres:</strong>
-                @for(genre of show.genres; track genre) {
-                <nz-tag [nzColor]="'blue'">{{ genre }}</nz-tag>
-                }
-            </p>
-            <p><strong>Rating:</strong> {{ show.rating.average }}</p>
-        </div>
+  <div class="header">
+    <img
+      [ngSrc]="show.image.original"
+      [alt]="show.name"
+      width="300"
+      height="440"
+      priority />
+    <div class="info">
+      <h3>{{ show.name }}</h3>
+      <p>
+        <strong>Premiered:</strong>
+        {{ show.premiered }}
+      </p>
+      <p>
+        <strong>Ended:</strong>
+        {{ show.ended }}
+      </p>
+      <p>
+        <strong>Language:</strong>
+        {{ show.language }}
+      </p>
+      <p>
+        <strong>Genres:</strong>
+        @for(genre of show.genres; track genre) {
+        <nz-tag [nzColor]="'blue'">{{ genre }}</nz-tag>
+        }
+      </p>
+      <p>
+        <strong>Rating:</strong>
+        {{ show.rating.average }}
+      </p>
     </div>
+  </div>
 
-    <div class="summary">
-        <h4>Summary</h4>
-        <div [innerHTML]="show.summary"></div>
-    </div>
+  <div class="summary">
+    <h4>Summary</h4>
+    <div [innerHTML]="show.summary"></div>
+  </div>
 
-    @if (show.schedule) {
-    <div class="schedule">
-        <h4>Schedule</h4>
-        <p>{{ show.schedule.days.join(', ') }} at {{ show.schedule.time }}</p>
-    </div>
-    }
-
-    @if (show.officialSite) {
-    <a [href]="show.officialSite" target="_blank" nz-button nzType="primary">
-        Official Site
-    </a>
-    }
+  @if (show.schedule) {
+  <div class="schedule">
+    <h4>Schedule</h4>
+    <p>{{ show.schedule.days.join(', ') }} at {{ show.schedule.time }}</p>
+  </div>
+  } @if (show.officialSite) {
+  <a [href]="show.officialSite" target="_blank" nz-button nzType="primary">
+    Official Site
+  </a>
+  }
 </div>
 }

@@ -22,10 +22,10 @@ import { ComponentState } from '../../../../shared/models';
 
 /**
  * SearchComponent
- * 
+ *
  * @description
  * Component that handles the search functionality.
- * 
+ *
  * @property {Input<ComponentState>} state - The loading state of the component.
  * @property {Output<string>} searchQuery - The search query event emitter.
  * @property {Signal<{ query: string }>} queryModel - The form model (the search query).

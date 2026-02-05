@@ -19,14 +19,14 @@ import { SeriesEvents } from '../series.events';
 
 /**
  * SearchContainerComponent
- * 
+ *
  * @description
  * Component that handles the search and display of series.
  * It uses the SeriesStore to manage the state of the series and dispatch events to the SeriesService.
- * 
+ *
  * @property {SeriesStore} store - The SeriesStore instance.
  * @property {Dispatch<SeriesEvents>} dispatch - The dispatch function for SeriesEvents.
- * 
+ *
  * @method {searchSeries} - Dispatches the queryChanged event with the new search query.
  * @method {onSeriesSelected} - Dispatches the seriesSelected event with the selected series ID.
  * @method {closeDrawer} - Dispatches the seriesSelected event with ID 0 to close the drawer.

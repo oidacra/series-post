@@ -8,10 +8,10 @@ import { SERIES_STATUS_COLOR_MAP } from '../../../../shared/constants';
 
 /**
  * SeriesCardComponent
- * 
+ *
  * @description
  * Component that displays a series card with the series name, poster, and status.
- * 
+ *
  * @property {Input<Serie>} item - The series item to display in the card.
  * @property {readonly Object} colorStatusSeriesMap - Map of series status to colors for the tag.
  */

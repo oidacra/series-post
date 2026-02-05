@@ -2,10 +2,16 @@
 <div class="series-card__wrapper">
   @for (item of skeletonItems; track $index) {
   <nz-card style="width: 210px" [nzCover]="coverSkeleton">
-    <nz-skeleton [nzActive]="true" [nzParagraph]="{ rows: 1 }" [nzTitle]="false"></nz-skeleton>
+    <nz-skeleton
+      [nzActive]="true"
+      [nzParagraph]="{ rows: 1 }"
+      [nzTitle]="false"></nz-skeleton>
   </nz-card>
   <ng-template #coverSkeleton>
-    <nz-skeleton-element nzType="image" [nzActive]="true" style="width: 210px; height: 295px"></nz-skeleton-element>
+    <nz-skeleton-element
+      nzType="image"
+      [nzActive]="true"
+      style="width: 210px; height: 295px"></nz-skeleton-element>
   </ng-template>
   }
 </div>
@@ -20,5 +26,6 @@
   }
 </div>
 } @else {
-<nz-empty nzNotFoundContent="Use the search for find you favorite TV Show"></nz-empty>
+<nz-empty
+  nzNotFoundContent="Use the search for find you favorite TV Show"></nz-empty>
 }

@@ -4,10 +4,10 @@ import { Serie, SerieDetail } from '../shared/models';
 
 /**
  * SeriesEvents
- * 
+ *
  * @description
  * Event group for series events.
- * 
+ *
  * @property {type<{ query: string }>} queryChanged - Event for when the query changes.
  * @property {type<{ theTvDbId: number }>} seriesSelected - Event for when a series is selected.
  */
@@ -22,10 +22,10 @@ export const SeriesEvents = eventGroup({
 
 /**
  * SeriesApiEvents
- * 
+ *
  * @description
  * Event group for series API events.
- * 
+ *
  * @property {type<Serie[]>} loadedSuccess - Event for when the data is successfully retrieved.
  * @property {type<string>} loadedFailure - Event for when the data retrieval fails.
  * @property {type<SerieDetail>} detailLoadedSuccess - Event for when the detail data is successfully retrieved.
