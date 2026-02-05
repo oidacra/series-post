@@ -1,73 +1,122 @@
-import { Injectable, Signal, inject } from '@angular/core';
-import { ComponentStore, tapResponse } from '@ngrx/component-store';
+import { effect, inject } from '@angular/core';
+import { mapResponse, tapResponse } from '@ngrx/operators';
 import {
-  ComponentState,
-  Serie,
-  SeriesState,
-  ViewModelComponent,
-} from '../shared/models';
-import { debounceTime, switchMap, tap } from 'rxjs';
-import { HttpErrorResponse } from '@angular/common/http';
+  patchState,
+  signalStore,
+  withState,
+  withHooks,
+  getState,
+} from '@ngrx/signals';
+import {
+  Events,
+  on,
+  withEventHandlers,
+  withReducer,
+} from '@ngrx/signals/events';
+import { debounceTime, filter, switchMap, tap } from 'rxjs';
+import { ComponentState, Serie, SerieDetail } from '../shared/models';
+import { SeriesEvents, SeriesApiEvents } from './series.events';
 import { SeriesService } from './services/series.service';
-import { initialSeriesState } from '../shared/constants';
 
 const DEBOUNCE_TIME_DEFAULT = 300;
 
-@Injectable()
-export class SeriesStore extends ComponentStore<SeriesState> {
-  // Updaters
-  readonly addSeries = this.updater((state, series: Serie[]) => {
-    return { ...state, series, state: 'loaded' };
-  });
-  readonly setQuery = this.updater((state, query: string) => {
-    return { ...state, query };
-  });
-
-  readonly searchSeries = this.effect<string>((query$) =>
-    query$.pipe(
-      debounceTime(DEBOUNCE_TIME_DEFAULT),
-      // Define the state of the component as loading
-      tap(() => this.patchState({ state: 'loading' })),
-      switchMap((query) =>
-        this.seriesService.searchSeries(query).pipe(
-          tapResponse({
-            // When the request is successful, update the store
-            next: (series) => {
-              return this.addSeries(series);
-            },
-            error: (e: HttpErrorResponse) => {
-              // When the request fails, update the store with the error state
-              this.patchState({ state: 'error' });
-              this.handleError(e);
-            },
-          })
-        )
-      )
-    )
-  );
-
-  // Selectors
-  private readonly series: Signal<Serie[]> = this.selectSignal(
-    (state) => state.series
-  );
-  private readonly componentState: Signal<ComponentState> = this.selectSignal(
-    ({ state }) => state
-  );
-
-  // This is the ViewModel exposed to the component
-  readonly vm: Signal<ViewModelComponent> = this.selectSignal(
-    this.series,
-    this.componentState,
-    (series, state) => ({ series, state })
-  );
-
-  private readonly seriesService = inject(SeriesService);
-
-  constructor() {
-    super(initialSeriesState); // <--- Initialization when the store is created
-  }
-
-  private handleError(e: HttpErrorResponse) {
-    console.warn(e);
-  }
+// Store state related
+export interface SeriesState {
+  series: Serie[];
+  seriesDetail: SerieDetail | null;
+  selectedId: number | null;
+  searchState: ComponentState;
+  detailState: ComponentState;
+  query: string;
 }
+
+const initialSeriesState: SeriesState = {
+  series: [],
+  seriesDetail: null,
+  selectedId: null,
+  searchState: 'idle',
+  detailState: 'idle',
+  query: '',
+};
+
+/**
+ * SeriesStore
+ *
+ * @description
+ * Signal store for managing series data.
+ *
+ * @property {SeriesState} state - The state of the series store.
+ * @property {Signal<Serie[]>} series - The series data.
+ * @property {Signal<SerieDetail | null>} seriesDetail - The series detail data.
+ * @property {Signal<number | null>} selectedId - The selected series ID.
+ * @property {Signal<ComponentState>} searchState - The search state.
+ * @property {Signal<ComponentState>} detailState - The detail state.
+ * @property {Signal<string>} query - The search query.
+ */
+export const SeriesStore = signalStore(
+  withState<SeriesState>(initialSeriesState),
+  // changes to the state
+  withReducer(
+    on(SeriesApiEvents.loadedSuccess, ({ payload: series }) => ({
+      series,
+      searchState: 'loaded',
+    })),
+    on(SeriesApiEvents.loadedFailure, () => ({
+      searchState: 'error',
+    })),
+    on(SeriesEvents.queryChanged, ({ payload: { query } }) => ({
+      query,
+      searchState: 'loading',
+    })),
+    on(SeriesEvents.seriesSelected, ({ payload: { theTvDbId } }) => ({
+      selectedId: theTvDbId,
+      detailState: 'loading',
+    })),
+    on(SeriesApiEvents.detailLoadedSuccess, ({ payload: seriesDetail }) => ({
+      seriesDetail,
+      detailState: 'loaded',
+    })),
+    on(SeriesApiEvents.detailLoadedFailure, () => ({
+      detailState: 'error',
+    }))
+  ),
+  // Listen Eventos to side effects
+  withEventHandlers(
+    (
+      store,
+      events = inject(Events),
+      seriesService = inject(SeriesService)
+    ) => ({
+      loadSeriesByQuery$: events.on(SeriesEvents.queryChanged).pipe(
+        debounceTime(DEBOUNCE_TIME_DEFAULT),
+        switchMap(({ payload }) =>
+          seriesService.searchSeries(payload.query).pipe(
+            mapResponse({
+              next: (series) => SeriesApiEvents.loadedSuccess(series),
+              error: (e: Error) => {
+                SeriesApiEvents.loadedFailure(
+                  e.message || 'Error loading series'
+                );
+              },
+            })
+          )
+        )
+      ),
+      loadSeriesDetail$: events.on(SeriesEvents.seriesSelected).pipe(
+        filter(({ payload }) => !!payload.theTvDbId),
+        switchMap(({ payload }) =>
+          seriesService.getSeriesDetail(payload.theTvDbId).pipe(
+            mapResponse({
+              next: (detail) => SeriesApiEvents.detailLoadedSuccess(detail),
+              error: (e: Error) => {
+                SeriesApiEvents.detailLoadedFailure(
+                  e.message || 'Error loading series details'
+                );
+              },
+            })
+          )
+        )
+      ),
+    })
+  )
+);

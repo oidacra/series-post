@@ -53,12 +53,11 @@ describe('SearchComponent', () => {
 
     it('should emit form value when the user clicks the button and form is valid', async () => {
       const expectedEmittedQueryValue = 'test'; // Mock data
-      component.form.setValue({ query: expectedEmittedQueryValue });
-      component.form.markAsTouched();
+      component.queryModel.set({ query: expectedEmittedQueryValue });
 
       // Espiamos 2 métodos
       const submitSpy = jest.spyOn(component, 'submitForm');
-      const outputSpy = jest.spyOn(component.query, 'emit');
+      const outputSpy = jest.spyOn(component.searchQuery, 'emit');
 
       // Buscamos el botón
       const button = de.nativeElement.querySelector(
@@ -72,7 +71,7 @@ describe('SearchComponent', () => {
       button.click();
 
       // Asserts
-      expect(component.form.valid).toBe(true); // El formulario es válido?
+      expect(component.form().valid()).toBe(true); // El formulario es válido?
       expect(submitSpy).toHaveBeenCalled(); // el método fue llamado con el click del botón?
       expect(outputSpy).toHaveBeenCalledWith(expectedEmittedQueryValue); // Si es válido, emitió el valor de query?
     });
@@ -87,7 +86,7 @@ describe('SearchComponent', () => {
       });
       it('clear icon should be present if query has value', async () => {
         // Act
-        component.form.setValue({ query: 'test' });
+        component.queryModel.set({ query: 'test' });
         fixture.detectChanges();
 
         // Assert
@@ -99,7 +98,7 @@ describe('SearchComponent', () => {
       });
       it('form should be reset when click clear icon', async () => {
         // Arrange
-        component.form.setValue({ query: 'test' });
+        component.queryModel.set({ query: 'test' });
         fixture.detectChanges();
 
         // Assert
@@ -115,7 +114,7 @@ describe('SearchComponent', () => {
 
         // Assert
         expect(component.resetForm).toHaveBeenCalled();
-        expect(component.form.controls['query'].value).toBeNull();
+        expect(component.form.query().value()).toBe('');
       });
     });
   });

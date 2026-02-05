@@ -15,14 +15,19 @@ jobs:
         with:
           fetch-depth: 0 # Fetch all history for all branches so that nx affected can compare against all commits
 
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
+        with:
+          run_install: false
+
       - name: Setup Node.js
         uses: actions/setup-node@v3 # Cache node_modules to speed up builds
         with:
           node-version: 22 # Use the version 22 of Node.js
-          cache: 'yarn' # Cache node_modules to speed up builds
+          cache: 'pnpm' # Cache node_modules to speed up builds
 
       - name: Install Dependencies
-        run: yarn install --frozen-lockfile # Install dependencies using yarn with a frozen lockfile
+        run: pnpm install --frozen-lockfile # Install dependencies using pnpm with a frozen lockfile
 
       - name: Run Build App
         run: npx nx build series-workspace #build the app

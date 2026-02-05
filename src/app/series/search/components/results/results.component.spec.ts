@@ -34,9 +34,7 @@ describe('ResultsComponent', () => {
       By.css('[data-testId="poster-title"]')
     );
     expect(posterTitle).toBeTruthy();
-    expect(posterTitle.nativeElement.innerHTML).toContain(
-      SeriesMock[0].show.name
-    );
+    expect(posterTitle.nativeElement.innerHTML).toContain(SeriesMock[0].name);
   });
 
   it('should show the correct medium image in nz-card', () => {
@@ -44,9 +42,7 @@ describe('ResultsComponent', () => {
       By.css('[data-testId="poster-image"]')
     );
     expect(posterImage).toBeTruthy();
-    expect(posterImage.properties['src']).toEqual(
-      SeriesMock[0].show.image.medium
-    );
+    expect(posterImage.properties['src']).toEqual(SeriesMock[0].image.medium);
   });
 
   it('should show empty component when `series` input is empty array', () => {

@@ -2,35 +2,40 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
-  inject,
   input,
   output,
+  signal,
 } from '@angular/core';
+
+import { debounce, form, FormField, schema } from '@angular/forms/signals';
 
 import {
   NzFormControlComponent,
   NzFormDirective,
   NzFormItemComponent,
-  NzFormLabelComponent,
 } from 'ng-zorro-antd/form';
-import {
-  FormBuilder,
-  FormControl,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
 import { NzColDirective, NzRowDirective } from 'ng-zorro-antd/grid';
 import { NzInputDirective, NzInputGroupComponent } from 'ng-zorro-antd/input';
 import { NzButtonComponent } from 'ng-zorro-antd/button';
 import { NzIconDirective } from 'ng-zorro-antd/icon';
 import { ComponentState } from '../../../../shared/models';
 
+/**
+ * SearchComponent
+ *
+ * @description
+ * Component that handles the search functionality.
+ *
+ * @property {Input<ComponentState>} state - The loading state of the component.
+ * @property {Output<string>} searchQuery - The search query event emitter.
+ * @property {Signal<{ query: string }>} queryModel - The form model (the search query).
+ * @property {ReactiveForm<{ query: string }>} form - The reactive form definition with debounce logic.
+ */
 @Component({
   selector: 'app-search',
   standalone: true,
   imports: [
     NzFormDirective,
-    ReactiveFormsModule,
     NzFormItemComponent,
     NzFormControlComponent,
     NzColDirective,
@@ -39,6 +44,7 @@ import { ComponentState } from '../../../../shared/models';
     NzRowDirective,
     NzInputGroupComponent,
     NzIconDirective,
+    FormField,
   ],
   templateUrl: './search.component.html',
   styleUrl: './search.component.scss',
@@ -46,30 +52,57 @@ import { ComponentState } from '../../../../shared/models';
   host: { class: 'inner-content' },
 })
 export class SearchComponent {
-  // Signal Input
+  /**
+   * Input signal for the component state (e.g., 'idle', 'loading').
+   */
   state = input<ComponentState>('idle');
-  // computed state
+
+  /**
+   * Computed signal to determine if the component is in a loading state.
+   */
   isLoading = computed(() => this.state() === 'loading');
 
-  // Signal Output
-  query = output<string>();
+  /**
+   * Output event emitter for the search query.
+   */
+  searchQuery = output<string>();
 
-  form = inject(FormBuilder).group({
-    query: new FormControl('', Validators.required),
+  /**
+   * Signal holding the form model (the search query).
+   */
+  queryModel = signal({
+    query: '',
   });
 
-  get queryValue(): string {
-    const { value } = this.form.controls['query'];
-    return value ? value : '';
-  }
+  /**
+   * Reactive form definition with debounce logic.
+   */
+  form = form(
+    this.queryModel,
+    schema((path) => {
+      debounce(path.query, 250);
+    })
+  );
 
-  submitForm() {
-    if (this.form.valid) {
-      this.query.emit(this.queryValue);
+  /**
+   * Handles form submission.
+   * Emits the search query if the form is valid.
+   * @param event - The form submission event.
+   */
+  submitForm(event: Event) {
+    event.preventDefault();
+    if (this.form().valid()) {
+      const query = this.form.query().value();
+      this.searchQuery.emit(query);
     }
   }
 
+  /**
+   * Resets the form query to an empty string.
+   */
   resetForm() {
-    this.form.reset();
+    this.queryModel.set({
+      query: '',
+    });
   }
 }
