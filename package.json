@@ -22,7 +22,7 @@
     "@ngrx/operators": "^21.0.1",
     "@ngrx/signals": "^21.0.1",
     "@nx/angular": "22.3.3",
-    "ng-zorro-antd": "21.0.2",
+    "ng-zorro-antd": "^21.0.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "0.16.0"
@@ -67,5 +67,5 @@
     "ts-node": "^10.9.2",
     "typescript": "5.9.3"
   },
-  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
+  "packageManager": "pnpm@9.0.0"
 }

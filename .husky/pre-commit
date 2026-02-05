@@ -1,2 +1,2 @@
-yarn nx format:write
-yarn nx affected -t lint,test --parallel=2
+pnpm nx format:write
+pnpm nx affected -t lint,test --parallel=2
